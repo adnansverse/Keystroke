@@ -1,0 +1,6 @@
+{
+  "name": "Keystroke — Typing Academy",
+  "description": "A typing academy web application with interactive lessons, arcade game modes, mechanical keyboard audio synthesis, weakness profiling, and real-time statistics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

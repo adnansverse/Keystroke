@@ -1,0 +1,367 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #FFB454;      /* amber keycap glow */
+  --accent-2: #5CCFE6;    /* cyan finger info */
+  --good: #7FD962;
+  --bad: #F26D78;
+  --radius: 12px;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --shadow-key: 0 3px 0 rgba(0,0,0,.55), 0 8px 18px rgba(0,0,0,.35);
+  --shadow-key-active: 0 1px 0 rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.3);
+}
+
+html[data-theme="dark"] {
+  --bg: #0A0C12;
+  --bg-elev: #10131C;
+  --panel: rgba(255,255,255,.045);
+  --panel-2: rgba(255,255,255,.07);
+  --panel-border: rgba(255,255,255,.09);
+  --text: #E8EAF0;
+  --text-dim: #8A90A6;
+  --text-dim2: #5D6377;
+  --key-face: linear-gradient(180deg,#232838,#171B26);
+  --key-face-hi: linear-gradient(180deg,#2C3247,#1B202D);
+  --key-border: #333a4f;
+  --track: #161a24;
+}
+
+html[data-theme="light"] {
+  --bg: #EEF0F5;
+  --bg-elev: #F8F9FC;
+  --panel: rgba(20,24,38,.04);
+  --panel-2: rgba(20,24,38,.06);
+  --panel-border: rgba(20,24,38,.09);
+  --text: #181B27;
+  --text-dim: #5B6178;
+  --text-dim2: #8A90A6;
+  --key-face: linear-gradient(180deg,#FFFFFF,#E7E9F0);
+  --key-face-hi: linear-gradient(180deg,#FFFDF6,#F3E7D3);
+  --key-border: #D2D6E2;
+  --track: #E2E5EE;
+  --shadow-key: 0 3px 0 rgba(30,34,50,.18), 0 8px 16px rgba(30,34,50,.10);
+  --shadow-key-active: 0 1px 0 rgba(30,34,50,.18), 0 2px 6px rgba(30,34,50,.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(1200px 800px at 15% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent),
+              radial-gradient(1000px 700px at 110% 10%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent),
+              var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .display-font {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--accent);
+  color: #171B26;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--panel-border);
+  border-radius: 8px;
+}
+
+.keycap {
+  background: var(--key-face);
+  border: 1px solid var(--key-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-key);
+  transition: transform .08s ease, box-shadow .08s ease, background .15s ease, border-color .15s ease;
+  color: var(--text);
+  outline: none;
+  user-select: none;
+}
+
+.keycap:active, .keycap.pressed {
+  transform: translateY(3px);
+  box-shadow: var(--shadow-key-active);
+}
+
+button.keycap {
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+button.keycap.primary {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, white), color-mix(in srgb, var(--accent) 78%, black 10%));
+  border-color: color-mix(in srgb, var(--accent) 60%, black 20%);
+  color: #1A1200;
+}
+
+button.keycap.primary:hover {
+  filter: brightness(1.05);
+}
+
+button.keycap.ghost {
+  background: transparent;
+  box-shadow: none;
+  border-color: var(--panel-border);
+}
+
+button.keycap.ghost:hover {
+  background: var(--panel);
+}
+
+button.keycap.ghost:active {
+  transform: translateY(1px);
+}
+
+button.keycap:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.panel.raised {
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 6px;
+  background: var(--track);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  transition: width .3s ease;
+}
+
+.text-stage {
+  padding: 30px 26px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  font-size: 22px;
+  line-height: 1.9;
+  letter-spacing: .02em;
+  min-height: 150px;
+  outline: none;
+  user-select: none;
+  font-family: var(--font-mono);
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.text-stage.blind {
+  filter: blur(7px);
+  transition: filter .25s ease;
+}
+
+.text-stage.blind:hover, .text-stage.blind:focus {
+  filter: none;
+}
+
+.ch-pending {
+  color: var(--text-dim2);
+}
+
+.ch-correct {
+  color: var(--good);
+}
+
+.ch-incorrect {
+  color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 25%, transparent);
+  border-radius: 3px;
+}
+
+.ch-current {
+  background: var(--accent);
+  color: #1A1200;
+  border-radius: 3px;
+  font-weight: 700;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Virtual keyboard styling */
+.vkeyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: 14px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.vk-row {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+}
+
+.vk-key {
+  min-width: 36px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border-radius: 7px;
+  background: var(--key-face);
+  border: 1px solid var(--key-border);
+  box-shadow: var(--shadow-key);
+  color: var(--text-dim);
+  position: relative;
+  transition: all .08s ease;
+  font-weight: 600;
+  flex: 1;
+  max-width: 48px;
+}
+
+.vk-key.w-1_5 {
+  flex: 1.5;
+  max-width: 68px;
+}
+
+.vk-key.w-2 {
+  flex: 2;
+  max-width: 88px;
+}
+
+.vk-key.w-space {
+  flex: 6;
+  max-width: 320px;
+}
+
+.vk-key.finger-L-pinky, .vk-key.finger-R-pinky {
+  box-shadow: var(--shadow-key), inset 0 0 0 1.5px color-mix(in srgb, #C97BE8 60%, transparent);
+}
+.vk-key.finger-L-ring, .vk-key.finger-R-ring {
+  box-shadow: var(--shadow-key), inset 0 0 0 1.5px color-mix(in srgb, #6FA8FF 60%, transparent);
+}
+.vk-key.finger-L-middle, .vk-key.finger-R-middle {
+  box-shadow: var(--shadow-key), inset 0 0 0 1.5px color-mix(in srgb, #7FD962 60%, transparent);
+}
+.vk-key.finger-L-index, .vk-key.finger-R-index {
+  box-shadow: var(--shadow-key), inset 0 0 0 1.5px color-mix(in srgb, #FFB454 60%, transparent);
+}
+
+.vk-key.active-next {
+  background: var(--key-face-hi);
+  color: var(--accent);
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent), var(--shadow-key);
+}
+
+.vk-key.hit-correct {
+  background: color-mix(in srgb, var(--good) 45%, var(--key-face)) !important;
+  color: #fff !important;
+  transform: translateY(2px);
+}
+
+.vk-key.hit-wrong {
+  background: color-mix(in srgb, var(--bad) 50%, var(--key-face)) !important;
+  color: #fff !important;
+  transform: translateY(2px);
+}
+
+/* Keyboard styles */
+body.kb-compact .vk-key {
+  height: 32px;
+  font-size: 11px;
+  border-radius: 5px;
+}
+
+body.kb-mechanical .vk-key {
+  height: 46px;
+  border-width: 2px;
+  border-radius: 9px;
+  box-shadow: 0 4px 0 rgba(0,0,0,.65), 0 10px 22px rgba(0,0,0,.4);
+}
+
+body.kb-laptop .vk-key {
+  height: 34px;
+  border-radius: 4px;
+  box-shadow: 0 1.5px 0 rgba(0,0,0,.3);
+}
+
+/* Falling words in meteor game */
+.falling-word {
+  position: absolute;
+  font-size: 17px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--key-face);
+  border: 1px solid var(--key-border);
+  box-shadow: var(--shadow-key);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  transition: transform .05s linear;
+}
+
+.falling-word .typed {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Switch toggle */
+.switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 99px;
+  background: var(--track);
+  position: relative;
+  border: 1px solid var(--panel-border);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.switch .knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all .18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.switch.on {
+  background: color-mix(in srgb, var(--accent) 40%, var(--track));
+  border-color: var(--accent);
+}
+
+.switch.on .knob {
+  left: 22px;
+  background: var(--accent);
+}
